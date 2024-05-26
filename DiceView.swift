@@ -26,21 +26,27 @@ struct DiceView: View {
 					HStack {
 						Spacer()
 						if displayDies.isEmpty {
+							Text("Results are visualised here when you press the generate button")
+								.font(.subheadline)
+						} else if displayDies.count != Int(dies) {
+							Text("Press Generate")
+								.font(.subheadline)
+						} else {
 							LazyVGrid(columns: columns, spacing: 10) {
-
-									ForEach(0..<displayDies.count, id: \.self) { index in
-										Image(systemName: "die.face.\(index > displayDies.count ? Int.random(in: 1...6) : displayDies[index])")
-											.resizable()
-											.scaledToFit()
-											.frame(width: 50, height: 50)
+								
+								ForEach(0..<displayDies.count, id: \.self) { index in
+									Image(systemName: "die.face.\(index > displayDies.count ? Int.random(in: 1...6) : displayDies[index])")
+										.resizable()
+										.scaledToFit()
+										.frame(width: 50, height: 50)
+									if index != displayDies.count {
 										Image(systemName: multiDieMode)
 											.resizable()
 											.scaledToFit()
-											.frame(width: 25)
+											.frame(width: 10, height: 10)
 									}
+								}
 							}.padding()
-						} else {
-							Text("Results are visualised here when you press the generate button")
 						}
 						Spacer()
 					}
@@ -63,7 +69,7 @@ struct DiceView: View {
 					multiDieMode = "multiply"
 				}
 			}
-		}
+		}.animation(.spring, value: displayDies)
 	}
 }
 
