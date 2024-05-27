@@ -70,7 +70,10 @@ func rngN6DieArr(dies: Int) -> [Int] {
 	return output
 }
 
-func rngCDie(dies: Int, min: Int, max: Int) -> Int {
-	
-	return 0
+func rngNCDie(dies: Int, min: Int, max: Int) -> [Int] {
+	var output: [Int] = []
+	for _ in 1...dies {
+		output.append(rngCDie(min: min, max: max))
+	}
+	return output
 }

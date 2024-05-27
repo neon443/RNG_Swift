@@ -1,27 +1,29 @@
 import SwiftUI
 
 struct DiceView: View {
-    @State var generated: [Int] = []
+    @State var generated: [Int] = [0]
 	@State var displayDies: [Int] = []
+	@State var multiDieMode = "plus"
+	@State var result = 0
+	@State var resultDescription = ""
 	@State var history: [Int] = []
-    let columns = [GridItem(.adaptive(minimum: 50, maximum: 75))]
+    let columns = [GridItem(.adaptive(minimum: 25, maximum: 75))]
     @State var dies: Double = 1
-    @State var multiDieMode = "plus"
     var body: some View {
-        VStack {
-            List {
-                Section("Number of die") {
-                    HStack {
-                        Text(String(Int(dies)))
-                        Slider(value: $dies, in: 1...10, step: 1)
-                    }
-                }
-                Section("Multi die mode") {
-                    Picker(selection: $multiDieMode, label: Text("")) {
-                        Image(systemName: "plus").tag("plus")
-                        Image(systemName: "multiply").tag("multiply")
-                    }.pickerStyle(SegmentedPickerStyle())
-                }
+		VStack {
+			List {
+				Section("Number of die") {
+					HStack {
+						Text(String(Int(dies)))
+						Slider(value: $dies, in: 1...10, step: 1)
+					}
+				}
+				Section("Multi die mode") {
+					Picker(selection: $multiDieMode, label: Text("")) {
+						Image(systemName: "plus").tag("plus")
+						Image(systemName: "multiply").tag("multiply")
+					}.pickerStyle(SegmentedPickerStyle())
+				}
 				Section("Visual") {
 					HStack {
 						Spacer()
@@ -30,16 +32,15 @@ struct DiceView: View {
 								.font(.subheadline)
 						} else if displayDies.count != Int(dies) {
 							Text("Press Generate")
-								.font(.subheadline)
+								.font(.title)
 						} else {
 							LazyVGrid(columns: columns, spacing: 10) {
-								
 								ForEach(0..<displayDies.count, id: \.self) { index in
 									Image(systemName: "die.face.\(index > displayDies.count ? Int.random(in: 1...6) : displayDies[index])")
 										.resizable()
 										.scaledToFit()
 										.frame(width: 50, height: 50)
-									if index != displayDies.count {
+									if index != displayDies.count-1 {
 										Image(systemName: multiDieMode)
 											.resizable()
 											.scaledToFit()
@@ -51,25 +52,48 @@ struct DiceView: View {
 						Spacer()
 					}
 				}
-			Section("Result") {
 				Button("Generate") {
 					generated = rngN6DieArr(dies: Int(dies))
 					displayDies = generated
+					result = arrCombine(arr: generated, combineMode: multiDieMode)
+					resultDescription = describeResult(inp: displayDies, combineMode: multiDieMode)
 				}
-				Text(String(arrCombine(arr: generated, combineMode: multiDieMode)))
+				Text(String(result))
 					.bold()
 					.font(.largeTitle)
-				}
-				Button("Test1") {
-					generated = [1, 2]
-					multiDieMode = "plus"
-				}
-				Button("Test2") {
-					generated = [1, 2]
+				Text(resultDescription)
+				Button("Test") {
 					multiDieMode = "multiply"
+					generated = [2,3]
+					displayDies = generated
+					dies = 2
 				}
 			}
-		}.animation(.spring, value: displayDies)
+		}
+	}
+}
+
+func describeResult(inp: [Int], combineMode: String) -> String {
+	var len = inp.count-1
+	var result = ""
+	var symbol = ""
+	if inp.isEmpty {
+		return "0"
+	} else {
+		if combineMode == "plus" {
+			symbol = " + "
+		} else if combineMode == "multiply" {
+			symbol = " x "
+		}
+		for i in 0...len {
+			if i == len {
+				result += String(inp[i])
+			} else {
+				result += String(inp[i]) + symbol
+			}
+		}
+		result += " = " + String(arrCombine(arr: inp, combineMode: combineMode))
+		return result
 	}
 }
 
