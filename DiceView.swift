@@ -3,6 +3,7 @@ import SwiftUI
 struct DiceView: View {
     @State var generated: [Int] = [0]
 	@State var displayDies: [Int] = []
+	@State var displayMultiDieMode = ""
 	@State var multiDieMode = "plus"
 	@State var result = 0
 	@State var resultDescription = ""
@@ -19,7 +20,7 @@ struct DiceView: View {
 					}
 				}
 				Section("Multi die mode") {
-					Picker(selection: $multiDieMode, label: Text("")) {
+					Picker(selection: $multiDieMode, label: Text("ioug")) {
 						Image(systemName: "plus").tag("plus")
 						Image(systemName: "multiply").tag("multiply")
 					}.pickerStyle(SegmentedPickerStyle())
@@ -41,7 +42,7 @@ struct DiceView: View {
 										.scaledToFit()
 										.frame(width: 50, height: 50)
 									if index != displayDies.count-1 {
-										Image(systemName: multiDieMode)
+										Image(systemName: displayMultiDieMode)
 											.resizable()
 											.scaledToFit()
 											.frame(width: 10, height: 10)
@@ -55,6 +56,7 @@ struct DiceView: View {
 				Button("Generate") {
 					generated = rngN6DieArr(dies: Int(dies))
 					displayDies = generated
+					displayMultiDieMode = multiDieMode
 					result = arrCombine(arr: generated, combineMode: multiDieMode)
 					resultDescription = describeResult(inp: displayDies, combineMode: multiDieMode)
 				}
@@ -62,12 +64,6 @@ struct DiceView: View {
 					.bold()
 					.font(.largeTitle)
 				Text(resultDescription)
-				Button("Test") {
-					multiDieMode = "multiply"
-					generated = [2,3]
-					displayDies = generated
-					dies = 2
-				}
 			}
 		}
 	}
