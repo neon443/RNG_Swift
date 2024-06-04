@@ -75,13 +75,17 @@ struct PasswordView: View {
                 }
 				Section("Result") {
 					HStack {
-						Spacer()
-						Text(String(result))
-						Spacer()
+						Group {
+							Spacer()
+							Text(String(result))
+							Spacer()
+						}
 					}
 					HStack {
 						Spacer()
 						Text(String(generated))
+							.font(.largeTitle)
+							.bold()
 						Spacer()
 					}
                 }
@@ -178,9 +182,9 @@ func genPass(type: String, min: Int?, max: Int?) -> String {
     return result
 }
 
-#Preview {
+#Preview("PasswordView") {
     PasswordView()
 }
-#Preview {
+#Preview("PassCodeWordHelpView") {
 	PassCodeWordHelpView()
 }

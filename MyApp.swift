@@ -85,7 +85,7 @@ func rngInt(len: Int) -> Int {
     }
     let resultInt = Int(result)
     return resultInt!
-} 
+}
 
 func rngString(len: Int) -> String {
     let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
