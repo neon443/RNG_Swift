@@ -35,15 +35,22 @@ func totalDoubleArr(arr: [Double]) -> Double {
 }
 
 // array combiner, adds or multiplies all ints in an array
-func arrCombine(arr: [Int], combineMode: String) -> Int {
-	var output = 0
+func arrCombine(arr: [Int], combineMode: String) -> UInt {
+	var newArr: [UInt] = []
+	for i in 0...(arr.count-1) {
+		newArr.append(UInt(arr[i]))
+	}
+	var output: UInt = 0
 	if combineMode == "plus" {
-		for num in arr {
+		for num in newArr {
 			output += num
 		}
 	} else if combineMode == "multiply" {
 		output = 1
-		for num in arr {
+		for num in newArr {
+			guard output <= UInt.max / num else {
+				return UInt.max //cap at uint.max 2^64
+			}
 			output *= num
 		}
 	} else {
@@ -53,11 +60,8 @@ func arrCombine(arr: [Int], combineMode: String) -> Int {
 	return output
 }
 
-
 func rng(min: Int, max: Int) -> Int {
-	var rng = 0
-	rng = Int.random(in: min...max)
-	return rng
+	return Int.random(in: min...max)
 }
 
 func rng6Die() -> Int {
@@ -69,6 +73,7 @@ func rngCDie(min: Int, max: Int) -> Int {
 }
 
 func rngN6DieArr(dies: Int) -> [Int] {
+	guard dies > 0 else { return [] }
 	var output: [Int] = []
 	for _ in 1...dies {
 		output.append(rng6Die())

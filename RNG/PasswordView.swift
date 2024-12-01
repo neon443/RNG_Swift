@@ -10,12 +10,12 @@ import SwiftUI
 struct PasswordView: View {
 	@State var selectedOptions: [PassOption] = []
 	let options: [PassOption] = [
-		PassOption(name: "0-9", chars: Array("0123456789")),
-		PassOption(name: "a-z", chars: Array("abcdefghijklmnopqrstuvwxyz")),
-		PassOption(name: "A-Z", chars: Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+		PassOption(name: "Digits", chars: Array("0123456789")),
+		PassOption(name: "Lowercase characters", chars: Array("abcdefghijklmnopqrstuvwxyz")),
+		PassOption(name: "Uppercase characters", chars: Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
 	]
 	@State var presetLen = 4
-	@State var customLen = 8
+	@State var customLen: Int = 0
 	@State var generated = ""
 	@State var result = ""
 	@State var history: [Int] = []
@@ -23,16 +23,6 @@ struct PasswordView: View {
 	var body: some View {
 		VStack {
 			List {
-				Text("Hello, world!")
-					.font(.largeTitle)
-					.foregroundColor(.white)
-					.padding()
-					.background(Color.blue)
-					.padding()
-					.background(Color.mint)
-					.padding()
-					.background(Color.green)
-				
 				Section("Include") {
 					ForEach(options) { option in
 						Toggle(isOn: Binding(
@@ -59,35 +49,30 @@ struct PasswordView: View {
 						Text("Custom: \(customLen)").tag(-1)
 					}
 					.pickerStyle(SegmentedPickerStyle())
+					
+					if presetLen == -1 {
+						TextField("Custom", value: $customLen, formatter: NumberFormatter())
+							.keyboardType(.numberPad)
+							.frame(width: 50)
+					}
 				}
-				
-				if presetLen == -1 {
-					TextField("Custom", value: $customLen, formatter: NumberFormatter())
-						.keyboardType(.numberPad)
-						.frame(width: 50)
-				}
-				
-				Text(String(result))
-					.font(.system(size: 75, weight: .bold))
-					.foregroundColor(.gray)
-					.frame(height: 50)
-				
-				Text(String(generated))
-					.font(.system(size: 75, weight: .bold))
-					.foregroundColor(.gray)
-					.frame(height: 50)
-				
-				Button {
-					generated = genPass(selectdOpts: selectedOptions, len: (presetLen == -1 ? customLen : presetLen))
-				} label: {
-					Text("Generate")
-						.padding(.horizontal)
-						.font(.system(size: 25, weight: .bold))
-				}
-				.buttonStyle(BorderedProminentButtonStyle())
-				.cornerRadius(15)
-				.padding(.vertical)
 			}
+			
+			Text(String(generated))
+				.font(.system(size: 50, weight: .bold))
+				.foregroundColor(.gray)
+				.frame(height: 40)
+			
+			Button {
+				generated = genPass(selectdOpts: selectedOptions, len: (presetLen == -1 ? customLen : presetLen))
+			} label: {
+				Text("Generate")
+					.padding(.horizontal)
+					.font(.system(size: 25, weight: .bold))
+			}
+			.buttonStyle(BorderedProminentButtonStyle())
+			.cornerRadius(15)
+			.padding(.vertical)
 		}
 	}
 }
@@ -103,7 +88,7 @@ struct PassOption: Identifiable {
 }
 
 func genPass(selectdOpts: [PassOption], len: Int) -> String {
-	let characters = selectdOpts.flatMap { $0.chars    }
+	let characters = selectdOpts.flatMap { $0.chars }
 	
 	guard !(characters.isEmpty) else {
 		print("characters empty")

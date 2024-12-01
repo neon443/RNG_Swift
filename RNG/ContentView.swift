@@ -12,44 +12,46 @@ struct ContentView: View {
 		VStack {
 			NavigationSplitView {
 				List {
-					NavigationLink {
-						NumberView()
-							.navigationTitle("Random Number Generator")
-					} label: {
-						HStack {
-							Text("Random Number Generator")
-							Spacer()
-							Image(systemName: "textformat.123")
+					Section("Generate...") {
+						NavigationLink {
+							NumberView()
+								.navigationTitle("Numbers")
+						} label: {
+							HStack {
+								Text("Numbers")
+								Spacer()
+								Image(systemName: "textformat.123")
+							}
+						}
+						NavigationLink {
+							DiceView()
+								.navigationTitle("Die")
+						} label: {
+							HStack {
+								Text("Die")
+								Spacer()
+								Image(systemName: "die.face.1")
+								Image(systemName: "die.face.2.fill")
+								Image(systemName: "die.face.3")
+								Image(systemName: "die.face.4.fill")
+								Image(systemName: "die.face.5")
+								Image(systemName: "die.face.6.fill")
+							}
+						}
+						NavigationLink {
+							PasswordView()
+								.navigationTitle("Passwords")
+						} label: {
+							HStack {
+								Text("Passwords")
+								Spacer()
+								Image(systemName: "rectangle.and.pencil.and.ellipsis")
+							}
 						}
 					}
-					NavigationLink {
-						DiceView()
-							.navigationTitle("Dice")
-					} label: {
-						HStack {
-							Text("Dice")
-							Spacer()
-							Image(systemName: "die.face.1")
-							Image(systemName: "die.face.2.fill")
-							Image(systemName: "die.face.3")
-							Image(systemName: "die.face.4.fill")
-							Image(systemName: "die.face.5")
-							Image(systemName: "die.face.6.fill")
-						}
-					}
-					NavigationLink {
-						PasswordView()
-							.navigationTitle("Password")
-					} label: {
-						HStack {
-							Text("Password")
-							Spacer()
-							Image(systemName: "rectangle.and.pencil.and.ellipsis")
-						}
-					}
+					.navigationTitle("RNG")
+					.navigationBarTitleDisplayMode(.inline)
 				}
-				.navigationTitle("RNG")
-				.navigationBarTitleDisplayMode(.inline)
 			} detail: {
 				Image(systemName: "dice.fill")
 			}
@@ -57,3 +59,6 @@ struct ContentView: View {
 	}
 }
 
+#Preview {
+	ContentView()
+}
