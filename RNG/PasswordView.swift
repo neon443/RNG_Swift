@@ -59,16 +59,19 @@ struct PasswordView: View {
 			}
 			
 			Text(String(generated))
-				.font(.system(size: 50, weight: .bold))
+				.font(.system(size: 50))
 				.foregroundColor(.gray)
 				.frame(height: 40)
+				.contentTransition(.numericText())
 			
 			Button {
-				generated = genPass(selectdOpts: selectedOptions, len: (presetLen == -1 ? customLen : presetLen))
+				withAnimation {
+					generated = genPass(selectdOpts: selectedOptions, len: (presetLen == -1 ? customLen : presetLen))
+				}
 			} label: {
 				Text("Generate")
 					.padding(.horizontal)
-					.font(.system(size: 25, weight: .bold))
+					.font(.system(size: 25))
 			}
 			.buttonStyle(BorderedProminentButtonStyle())
 			.cornerRadius(15)

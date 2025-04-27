@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A92723A92D300BE200D595BE /* IPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92723A82D300BE200D595BE /* IPView.swift */; };
+		A977CC942DBBE67F00DED8C0 /* MACView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A977CC932DBBE67F00DED8C0 /* MACView.swift */; };
 		A9794C832CB70ADA00527984 /* RNGApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9794C822CB70ADA00527984 /* RNGApp.swift */; };
 		A9794C852CB70ADA00527984 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9794C842CB70ADA00527984 /* ContentView.swift */; };
 		A9794C872CB70AE100527984 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9794C862CB70AE100527984 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A92723A82D300BE200D595BE /* IPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPView.swift; sourceTree = "<group>"; };
+		A977CC932DBBE67F00DED8C0 /* MACView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MACView.swift; sourceTree = "<group>"; };
 		A9794C7F2CB70ADA00527984 /* RNG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9794C822CB70ADA00527984 /* RNGApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNGApp.swift; sourceTree = "<group>"; };
 		A9794C842CB70ADA00527984 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				A9794C952CB70C8000527984 /* PasswordView.swift */,
 				A9794C912CB70BF600527984 /* DiceView.swift */,
 				A9794C932CB70C1400527984 /* NumberView.swift */,
+				A92723A82D300BE200D595BE /* IPView.swift */,
+				A977CC932DBBE67F00DED8C0 /* MACView.swift */,
 				A9794C862CB70AE100527984 /* Assets.xcassets */,
 				A9794C882CB70AE100527984 /* RNG.entitlements */,
 				A9794C892CB70AE100527984 /* Preview Content */,
@@ -106,7 +112,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					A9794C7E2CB70ADA00527984 = {
 						CreatedOnToolsVersion = 15.4;
@@ -149,9 +155,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9794C962CB70C8000527984 /* PasswordView.swift in Sources */,
+				A92723A92D300BE200D595BE /* IPView.swift in Sources */,
 				A9794C852CB70ADA00527984 /* ContentView.swift in Sources */,
 				A9794C922CB70BF600527984 /* DiceView.swift in Sources */,
 				A9794C942CB70C1400527984 /* NumberView.swift in Sources */,
+				A977CC942DBBE67F00DED8C0 /* MACView.swift in Sources */,
 				A9794C832CB70ADA00527984 /* RNGApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,6 +201,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -254,6 +263,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -281,8 +291,9 @@
 				CODE_SIGN_ENTITLEMENTS = RNG/RNG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RNG/Preview Content\"";
-				DEVELOPMENT_TEAM = 8626DL2GW3;
+				DEVELOPMENT_TEAM = 8JGND254B7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -304,7 +315,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.neon443.RNG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -319,8 +332,9 @@
 				CODE_SIGN_ENTITLEMENTS = RNG/RNG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RNG/Preview Content\"";
-				DEVELOPMENT_TEAM = 8626DL2GW3;
+				DEVELOPMENT_TEAM = 8JGND254B7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -342,7 +356,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.neon443.RNG;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -71,22 +71,25 @@ struct DiceView: View {
 				}
 			}
 			Text(String(result))
-				.font(.system(size: 50, weight: .bold))
+				.font(.system(size: 50))
 				.foregroundColor(.gray)
 				.frame(height: 40)
+				.contentTransition(.numericText())
 			Text(resultDescription)
 				.frame(height: 10)
 				.font(.system(size: 10))
 			Button {
-				generated = rngN6DieArr(dies: Int(dies))
-				displayDies = generated
-				displayMultiDieMode = multiDieMode
-				result = arrCombine(arr: generated, combineMode: multiDieMode)
-				resultDescription = describeResult(inp: displayDies, combineMode: multiDieMode)
+				withAnimation {
+					generated = rngN6DieArr(dies: Int(dies))
+					displayDies = generated
+					displayMultiDieMode = multiDieMode
+					result = arrCombine(arr: generated, combineMode: multiDieMode)
+					resultDescription = describeResult(inp: displayDies, combineMode: multiDieMode)
+				}
 			} label: {
 				Text("Generate")
 					.padding(.horizontal)
-					.font(.system(size: 25, weight: .bold))
+					.font(.system(size: 25))
 			}
 			.buttonStyle(BorderedProminentButtonStyle())
 			.cornerRadius(15)

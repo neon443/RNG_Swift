@@ -48,6 +48,24 @@ struct ContentView: View {
 								Image(systemName: "rectangle.and.pencil.and.ellipsis")
 							}
 						}
+						NavigationLink() {
+							IPView()
+						} label: {
+							HStack {
+								Text("IP Adresses")
+								Spacer()
+								Image(systemName: "network")
+							}
+						}
+						NavigationLink() {
+							MACView()
+						} label: {
+							HStack {
+								Text("MAC Adresses")
+								Spacer()
+								Image(systemName: "antenna.radiowaves.left.and.right")
+							}
+						}
 					}
 					.navigationTitle("RNG")
 					.navigationBarTitleDisplayMode(.inline)

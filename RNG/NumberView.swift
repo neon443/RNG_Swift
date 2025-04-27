@@ -52,16 +52,19 @@ struct NumberView: View {
 			}
 		}
 		Text(generated)
-			.font(.system(size: 50, weight: .bold))
+			.font(.system(size: 50))
 			.foregroundColor(.gray)
 			.frame(height: 40)
+			.contentTransition(.numericText())
 		Button {
-			prevGen = generated
-			generated = rng3(min: low, max: high, exclude: exclude)
+			withAnimation {
+				prevGen = generated
+				generated = rng3(min: low, max: high, exclude: exclude)
+			}
 		} label: {
 			Text("Generate")
 				.padding(.horizontal)
-				.font(.system(size: 25, weight: .bold))
+				.font(.system(size: 25))
 		}
 		.buttonStyle(BorderedProminentButtonStyle())
 		.cornerRadius(15)
