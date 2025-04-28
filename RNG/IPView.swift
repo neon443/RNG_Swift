@@ -17,9 +17,13 @@ struct IPView: View {
 				Text("IPv6").tag(6)
 			}
 			.pickerStyle(SegmentedPickerStyle())
-			Text(ip)
-				.contentTransition(.numericText())
 		}
+		Text(ip)
+			.font(.system(size: 30))
+			.foregroundColor(.gray)
+			.frame(height: 40)
+			.contentTransition(.numericText())
+			.monospaced()
 		Button {
 			withAnimation {
 				ip = generateIPv(ipType)

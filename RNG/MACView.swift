@@ -11,20 +11,18 @@ import SwiftUI
 struct MACView: View {
 	@State var mac: String = ""
 	@State var maclook: String = ""
+	@State var looking: Bool = false
 	var body: some View {
-		Button("test") {
-			mac = "1c:57:dc:7f:d4:ce"
-			Task {
-				maclook = await maclookup(mac)
-			}
-		}
-		
 		List {
 			HStack {
 				Label("Vendor", systemImage: "building.2.fill")
 				Spacer()
-				Text(maclook)
-					.bold()
+				if looking {
+					ProgressView()
+				} else {
+					Text(maclook)
+						.bold()
+				}
 			}
 		}
 		
@@ -39,7 +37,9 @@ struct MACView: View {
 				mac = generateMAC()
 			}
 			Task {
+				looking = true
 				maclook = await maclookup(mac)
+				looking = false
 			}
 		} label: {
 			Text("Generate")
@@ -55,11 +55,11 @@ struct MACView: View {
 
 func generateMAC() -> String {
 	var output = ""
-		for _ in 0..<6 {
-			output.append(hex(Int.random(in: 0...15)).hex)
-			output.append(hex(rng(min: 0, max: 15)).hex)
-			output.append(":")
-		}
+	for _ in 0..<6 {
+		output.append(hex(Int.random(in: 0...15)).hex)
+		output.append(hex(rng(min: 0, max: 15)).hex)
+		output.append(":")
+	}
 	output.removeLast()
 	return output
 }
@@ -74,12 +74,11 @@ func maclookup(_ mac: String) async -> String {
 		let result = String(data: data, encoding: .utf8) ?? "Lookup Error"
 		if result.contains("{") {
 			let dict = try JSONDecoder().decode([String: [String: String]].self, from: data)
-			if let dict = dict["error"] {
-				print(dict["detail"] as Any)
+			if let dict = dict["errors"] {
+				return "\(dict["detail"]!)"
 			}
 		}
-			
-			return "sd"
+		return result
 	} catch {
 		print(error.localizedDescription)
 		return "Lookup Error"
@@ -118,5 +117,5 @@ class hex {
 	}
 }
 #Preview {
-    MACView()
+	MACView()
 }
