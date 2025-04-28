@@ -12,17 +12,41 @@ struct MACView: View {
 	@State var mac: String = ""
 	@State var maclook: String = ""
 	@State var looking: Bool = false
+	fileprivate func maclookup() async {
+		looking = true
+		maclook = await maclookupAPI(mac)
+		looking = false
+	}
+	
 	var body: some View {
 		List {
 			HStack {
 				Label("Vendor", systemImage: "building.2.fill")
 				Spacer()
-				if looking {
-					ProgressView()
-				} else {
-					Text(maclook)
-						.bold()
+				Text(maclook)
+					.bold()
+					.animation(.spring, value: looking)
+					.animation(.spring, value: maclook)
+					.contentTransition(.numericText())
+				Button() {
+					Task {
+						await maclookup()
+					}
+				} label: {
+					ZStack {
+						ProgressView()
+							.opacity(looking ? 1 : 0)
+							.animation(.spring, value: looking)
+						Image(systemName: "arrow.clockwise")
+							.resizable()
+							.scaledToFit()
+							.opacity(looking ? 0 : 1)
+							.animation(.spring, value: looking)
+					}
 				}
+				.frame(width: 20)
+				.disabled(mac.isEmpty)
+				.buttonStyle(BorderlessButtonStyle())
 			}
 		}
 		
@@ -37,9 +61,7 @@ struct MACView: View {
 				mac = generateMAC()
 			}
 			Task {
-				looking = true
-				maclook = await maclookup(mac)
-				looking = false
+				await maclookup()
 			}
 		} label: {
 			Text("Generate")
@@ -64,7 +86,7 @@ func generateMAC() -> String {
 	return output
 }
 
-func maclookup(_ mac: String) async -> String {
+func maclookupAPI(_ mac: String) async -> String {
 	let url = URL(string: "https://api.macvendors.com/\(mac)")!
 	var request = URLRequest(url: url)
 	request.httpMethod = "GET"
